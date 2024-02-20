@@ -27,7 +27,7 @@ const getCoffeeList = (category: String, data: any) => {
 const HomeScreen = () => {
   const CoffeeList =  useStore((state: any) => state.CoffeeList);
   const BeanList = useStore((state: any) => state.BeanList);
-
+  const addToCart = useStore((state: any) => state.addToCart);
   const [categories, setCategories] = useState(getCategoriesFromCoffeeData(CoffeeList));
   const [searchText, setSearchText] = useState('');
   const [categoryIndex, setCategoryIndex] = useState({

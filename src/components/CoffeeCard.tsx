@@ -5,6 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import CustomIcon from './CustomIcon';
 import BGIcon from './BGIcon';
+import { useNavigation } from '@react-navigation/native';
 
 interface CoffeeCardProps {
     id: string,
@@ -33,8 +34,15 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
     price,
     buttonPressHandler,
 }) => {
+const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.cardContainer}>
+    <TouchableOpacity onPress={() => {
+        navigation.navigate('Details', {
+            id: id,
+            type: type,
+            index: index,
+        });
+    }} style={styles.cardContainer}>
         <LinearGradient
             start={{x:0, y:0}}
             end={{x:1, y:1}}

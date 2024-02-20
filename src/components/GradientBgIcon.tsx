@@ -8,7 +8,7 @@ import CustomIcon from './CustomIcon';
 interface GradientBgIconProps {
     name: String,
     color: String,
-    size: Number
+    size: Number,
 }
 
 const GradientBgIcon:React.FC<GradientBgIconProps> = ({name, color, size}) => {
@@ -43,5 +43,5 @@ const styles = StyleSheet.create({
         width:SPACING.space_36,
         alignItems:'center',
         justifyContent:'center',
-    },
+    }
 });
