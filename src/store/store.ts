@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import {create} from 'zustand';
 import { produce } from 'immer';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -66,6 +68,32 @@ export const useStore = create(
                     }
                 }
                 )
+            ),
+            incrementCartItem: (id: string, size: string) => set(
+                produce(state => {
+                    state.CartList.forEach((item: any) => {
+                        if (item.id === id){
+                            item.prices.forEach((currSize: any) => {
+                                if (currSize.size === size){
+                                    currSize.quantity += 1;
+                                }
+                            });
+                        }
+                    });
+                })
+            ),
+            decrementCartItem: (id: string, size: string) => set(
+                produce(state => {
+                    state.CartList.forEach((item: any) => {
+                        if (item.id === id){
+                            item.prices.forEach((currSize: any) => {
+                                if (currSize.size === size && currSize.quantity >= 1){
+                                    currSize.quantity -= 1;
+                                }
+                            });
+                        }
+                    });
+                })
             ),
             calculatePrice: () => set(
                 produce(state => {

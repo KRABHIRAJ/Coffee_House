@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
-import { Dimensions, ImageBackground, ImageProps, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, ImageBackground, ImageProps, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { BORDERRADIUS, COLORS, FONTFAMILY, FONTSIZE, SPACING } from '../theme/theme';
 import CustomIcon from './CustomIcon';
 import BGIcon from './BGIcon';
 import { useNavigation } from '@react-navigation/native';
+import { useStore } from '../store/store';
 
 interface CoffeeCardProps {
     id: string,
@@ -35,6 +36,8 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
     buttonPressHandler,
 }) => {
 const navigation = useNavigation();
+const addToCart = useStore((state: any) => state.addToCart);
+
   return (
     <TouchableOpacity onPress={() => {
         navigation.navigate('Details', {
@@ -63,8 +66,11 @@ const navigation = useNavigation();
             <Text style={styles.specialIngredientText}>{special_ingredient}</Text>
 
             <View style={styles.priceDetailContainer}>
-                <Text style={styles.priceTextParent}>$ <Text style={styles.priceTextChild}>{price}</Text></Text>
-                <TouchableOpacity>
+                <Text style={styles.priceTextParent}>$ <Text style={styles.priceTextChild}>{price.price}</Text></Text>
+                <TouchableOpacity onPress={() => {
+                    addToCart(id, price.size, type);
+                    ToastAndroid.show(`${name} added to cart`, ToastAndroid.SHORT);
+                    }}>
                     <BGIcon name="add" size={FONTSIZE.size_12} color={COLORS.primaryWhiteHex} bgColor={COLORS.primaryOrangeHex}  />
                 </TouchableOpacity>
             </View>

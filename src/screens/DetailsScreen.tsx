@@ -74,6 +74,7 @@ const DetailsScreen = ({navigation, route} : any) => {
         <PaymentFooter price = {selectedSize} buttonTitle={'Add to Cart'} buttonPressHandler={() => {
           addToCart(ItemOfIndex.id, selectedSize.size, ItemOfIndex.type);
           calculatePrice();
+          navigation.navigate('Cart');
         }}
          />
       </ScrollView>
