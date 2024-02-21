@@ -37,6 +37,7 @@ const CoffeeCard: React.FC<CoffeeCardProps> = ({
 }) => {
 const navigation = useNavigation();
 const addToCart = useStore((state: any) => state.addToCart);
+const calculatePrice = useStore((state: any) => state.calculatePrice);
 
   return (
     <TouchableOpacity onPress={() => {
@@ -69,6 +70,7 @@ const addToCart = useStore((state: any) => state.addToCart);
                 <Text style={styles.priceTextParent}>$ <Text style={styles.priceTextChild}>{price.price}</Text></Text>
                 <TouchableOpacity onPress={() => {
                     addToCart(id, price.size, type);
+                    calculatePrice();
                     ToastAndroid.show(`${name} added to cart`, ToastAndroid.SHORT);
                     }}>
                     <BGIcon name="add" size={FONTSIZE.size_12} color={COLORS.primaryWhiteHex} bgColor={COLORS.primaryOrangeHex}  />

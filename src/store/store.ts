@@ -84,11 +84,22 @@ export const useStore = create(
             ),
             decrementCartItem: (id: string, size: string) => set(
                 produce(state => {
-                    state.CartList.forEach((item: any) => {
+                    state.CartList.forEach((item: any, index: number) => {
                         if (item.id === id){
+                            let quanGreater = 0;
                             item.prices.forEach((currSize: any) => {
-                                if (currSize.size === size && currSize.quantity >= 1){
+                                if (currSize.quantity >= 1){
+                                    quanGreater += 1;
+                                }
+                            });
+                            item.prices.forEach((currSize: any) => {
+                                if (currSize.size === size && currSize.quantity > 1){
                                     currSize.quantity -= 1;
+                                } else if (currSize.size === size && currSize.quantity === 1){
+                                    currSize.quantity -= 1;
+                                    if (quanGreater === 1){
+                                        state.CartList.splice(index, 1);
+                                    }
                                 }
                             });
                         }
