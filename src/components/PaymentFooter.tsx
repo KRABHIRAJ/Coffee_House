@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
     },
     priceContainer:{
-      marginRight:SPACING.space_10,
-      width:140,
+      marginRight:SPACING.space_20,
     },
     priceText:{
         color:COLORS.secondaryLightGreyHex,

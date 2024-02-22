@@ -98,7 +98,7 @@ const CartScreen = ({navigation}: any) => {
          <View style={{marginBottom:tabBarHeight + 90}} />
          </ScrollView>
          <View style={[styles.paymentFooter, {bottom: tabBarHeight}]}>
-            <PaymentFooter price={cartPrice} buttonTitle={'Pay'} buttonPressHandler={() => {}} />
+            <PaymentFooter price={cartPrice} buttonTitle={'Pay'} buttonPressHandler={() => navigation.push('Payment')} />
          </View>
         </View>
       }
