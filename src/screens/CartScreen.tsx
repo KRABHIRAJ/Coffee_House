@@ -10,7 +10,7 @@ import PaymentFooter from '../components/PaymentFooter';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import BGIcon from '../components/BGIcon';
 
-const CartScreen = () => {
+const CartScreen = ({navigation}: any) => {
   const CartList = useStore((state: any) => state.CartList);
   const cartPrice = useStore((state: any) => state.cartPrice);
   const calculatePrice = useStore((state: any) => state.calculatePrice);
@@ -38,16 +38,23 @@ const CartScreen = () => {
                   style={styles.LinearGradientBG}
                 >
                   <View style={styles.cartItemDetails}>
-                    <Image source={item.imagelink_square} style={styles.cartItemImage} />
-                    <View style={styles.cartItemDesciption}>
-                        <View style={styles.nameTextContainer}>
-                          <Text style={styles.itemNameText}>{item.name}</Text>
-                          <Text style={styles.specialGradientText}>{item.special_ingredient}</Text>
-                        </View>
-                        <View style={styles.roastedContainer}>
-                          <Text style={styles.roastedText}>{item.roasted}</Text>
-                        </View>
-                    </View>
+                    <TouchableOpacity onPress={() => navigation.navigate('Details', {
+                      id: item.id,
+                      type: item.type,
+                      index: item.index,
+                  })} 
+              style={styles.touchableOpacityContainer}>
+                      <Image source={item.imagelink_square} style={styles.cartItemImage} />
+                      <View style={styles.cartItemDesciption}>
+                          <View style={styles.nameTextContainer}>
+                            <Text style={styles.itemNameText}>{item.name}</Text>
+                            <Text style={styles.specialGradientText}>{item.special_ingredient}</Text>
+                          </View>
+                          <View style={styles.roastedContainer}>
+                            <Text style={styles.roastedText}>{item.roasted}</Text>
+                          </View>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                   <View style={styles.cartItemSizeDetailContainer}>
                     {
@@ -129,6 +136,9 @@ const styles = StyleSheet.create({
     resizeMode:'cover',
   },
   cartItemDetails:{
+    flexDirection:'row',
+  },
+  touchableOpacityContainer:{
     flexDirection:'row',
   },
   cartItemDesciption:{
