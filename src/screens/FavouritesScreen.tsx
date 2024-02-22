@@ -9,7 +9,7 @@ import Header from '../components/Header';
 import LinearGradient from 'react-native-linear-gradient';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
-const FavouritesScreen = () => {
+const FavouritesScreen = ({navigation}: any) => {
   const FavouriteList = useStore((state: any) => state.FavouriteList);
   const toggleFavouriteList = useStore((state: any) => state.toggleFavouriteList);
   const tabBarHeight = useBottomTabBarHeight();
@@ -25,7 +25,13 @@ const FavouritesScreen = () => {
             {
               FavouriteList.map((item: any, index: number) => (
                 <View key={index} style={styles.favouriteItem}>
-                  <TouchableOpacity style={styles.favouriteItemTouchableOpacity}>
+                  <TouchableOpacity onPress={() => 
+                      navigation.navigate('Details', {
+                        id: item.id,
+                        type: item.type,
+                        index: item.index,
+                    })
+                  } style={styles.favouriteItemTouchableOpacity}>
                     <ImageBgHeader
                         EnableBackHandler={false}
                         imagelink_portrait = {item.imagelink_portrait}
