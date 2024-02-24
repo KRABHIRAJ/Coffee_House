@@ -153,6 +153,20 @@ export const useStore = create(
                 })
             ),
 
+            placeOrder: () => set(
+                produce(state => {
+                    if (state.CartList.length > 0){
+                        const orderHistoryObj = {
+                            timestamp: new Date().toLocaleString(),
+                            orderAmount: state.cartPrice,
+                            orderedItem: state.CartList,
+                        };
+                        state.OrderHistoryList.unshift(orderHistoryObj);
+                        state.CartList = [];
+                        state.cartPrice = 0;
+                    }
+                })
+            ),
         }),
         {
             name: 'coffee-app',

@@ -34,9 +34,10 @@ const PaymentList = [
 ];
 
 
-const PaymentScreen = () => {
+const PaymentScreen = ({navigation}: any) => {
   const [selectedMethod, setSelectedMethod] = useState('Wallet');
   const cartPrice = useStore((state: any) => state.cartPrice);
+  const placeOrder = useStore((state: any) => state.placeOrder);
 
   return (
     <View style={styles.paymentContainer}>
@@ -111,7 +112,10 @@ const PaymentScreen = () => {
           }
         </View>
         <View style={styles.footerPayment}>
-          <PaymentFooter price={cartPrice} buttonTitle={`Pay with ${selectedMethod}`} buttonPressHandler={() => {}}/>
+          <PaymentFooter price={cartPrice} buttonTitle={`Pay with ${selectedMethod}`} buttonPressHandler={() => {
+            placeOrder();
+            navigation.navigate('History');
+          }}/>
         </View>
       </View>
     </View>
