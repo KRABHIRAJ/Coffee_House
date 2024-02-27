@@ -8,6 +8,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import CustomIcon from '../components/CustomIcon';
 import PaymentFooter from '../components/PaymentFooter';
 import { useStore } from '../store/store';
+import PopUpAnimation from '../components/PopUpAnimation';
 
 
 const PaymentList = [
@@ -38,9 +39,20 @@ const PaymentScreen = ({navigation}: any) => {
   const [selectedMethod, setSelectedMethod] = useState('Wallet');
   const cartPrice = useStore((state: any) => state.cartPrice);
   const placeOrder = useStore((state: any) => state.placeOrder);
+  const [showAnimation, setShowAnimation] = useState(false);
+
+  const showSuccessAnimation = () => {
+    setShowAnimation(true);
+    setTimeout(() => {
+      setShowAnimation(false);
+      navigation.navigate('History');
+    }, 1800);
+  };
+
 
   return (
     <View style={styles.paymentContainer}>
+      {showAnimation && <PopUpAnimation source={require('../lottie/successful.json')} style={styles.popupStyle} />}
       <View style={styles.paymentHeader}>
         <GradientBgIcon name="menu" size={FONTSIZE.size_18} color={COLORS.primaryLightGreyHex} />
         <Text style={styles.paymentText}>Payments</Text>
@@ -57,8 +69,8 @@ const PaymentScreen = ({navigation}: any) => {
                   style={styles.LinearGradientCreditCard}
                 >
                   <View style={styles.creditCardChipContainer}>
-                    <CustomIcon name='chip' size={30} color={COLORS.primaryOrangeHex} />
-                    <CustomIcon name='visa' size={60} color={COLORS.primaryWhiteHex} />
+                    <CustomIcon name="chip" size={30} color={COLORS.primaryOrangeHex} />
+                    <CustomIcon name="visa" size={60} color={COLORS.primaryWhiteHex} />
                   </View>
                   <View style={styles.creditCardNumber}>
                       <Text style={styles.creditCardNumberText}>6969</Text>
@@ -114,7 +126,7 @@ const PaymentScreen = ({navigation}: any) => {
         <View style={styles.footerPayment}>
           <PaymentFooter price={cartPrice} buttonTitle={`Pay with ${selectedMethod}`} buttonPressHandler={() => {
             placeOrder();
-            navigation.navigate('History');
+            showSuccessAnimation();
           }}/>
         </View>
       </View>
@@ -129,6 +141,9 @@ const styles = StyleSheet.create({
     backgroundColor:COLORS.primaryBlackHex,
     flex:1,
     padding:SPACING.space_20,
+  },
+  popupStyle:{
+    flex:1,
   },
   paymentBody:{
     justifyContent:'space-between',
@@ -240,5 +255,5 @@ const styles = StyleSheet.create({
     color:COLORS.primaryWhiteHex,
     fontSize:FONTSIZE.size_16,
     fontFamily:FONTFAMILY.poppins_semibold,
-  }
+  },
 });
